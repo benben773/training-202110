@@ -18,22 +18,12 @@ public class LoanPlanService {
     }
 
     public String checkUserLoadPlan(String idCard, Integer loanTerm) {
-        String result ="";
         UserLoanPlanMaterial userLoanPlanMaterial = userLoanPlanMaterialDAO.selectUserLoanPlanMaterial(idCard);
         Gender gender = userLoanPlanMaterial.getGender();
         Integer lenderAge = userLoanPlanMaterial.getLenderAge();
         String resultCode = "0";
         String returnMessage = "returnMessage";
-        result = checkeLenderAndLoanTerm(loanTerm, result, gender, lenderAge, resultCode, returnMessage);
-        return result;
+        return LoanCheckStrategyUtil.checkeLenderAndLoanTerm(gender, lenderAge, loanTerm, resultCode, returnMessage);
     }
 
-    private String checkeLenderAndLoanTerm(Integer loanTerm, String result, Gender gender, Integer lenderAge, String resultCode, String returnMessage) {
-        if(gender == Gender.MALE){
-            if (lenderAge + loanTerm <= 65) {
-                result = "{\"returnCode\": \"" + resultCode + "\",\"" + returnMessage + "\":\"\"}";
-            }
-        }
-        return result;
-    }
 }
