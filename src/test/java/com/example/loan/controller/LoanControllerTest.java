@@ -30,6 +30,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static com.example.loan.bo.Gender.MALE;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -59,7 +60,17 @@ public class LoanControllerTest {
     }
 
     @Test
-    public void 男性_年龄_加_贷款年限_不超过65_贷款成功() {
+    public void 男性_年龄_加_贷款年限_不超过65_贷款成功() throws Exception {
+        String idCard = "1";
+        givenLoanPlanMaterialData("李蛋", MALE, 35, 0, idCard);
+        String result = mockMvc.perform(
+                get("/loan-plans/{idCard}/{loanTerm}", idCard,30))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expected = "{\"returnCode\": \"0\",\"returnMessage\":\"\"}";
+        assertThat(result).isEqualTo(expected);
 
     }
 
