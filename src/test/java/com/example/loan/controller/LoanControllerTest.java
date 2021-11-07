@@ -69,7 +69,7 @@ public class LoanControllerTest {
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"returnCode\": \"0\",\"returnMessage\":\"\"}";
+        String expected = "{\"returnCode\":\"true\",\"returnMessage\":\"\"}";
         assertThat(result).isEqualTo(expected);
 
     }

@@ -1,5 +1,6 @@
 package com.example.loan.service;
 
+import com.example.loan.bo.CheckResultBo;
 import com.example.loan.bo.Gender;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,11 +33,12 @@ public class LoanCheckStrategyUtilTest {
     }
     @Test
     public void 女性_年龄_加_贷款年限_不能超过60() {
-        check(gender, lenderAge, loanTerm, gender.getDesc() + "_年龄_加_贷款年限_不能超过" + maxAgePlusLoanTermValue);
+        check(gender, lenderAge, loanTerm, false,gender.getDesc() + "_年龄_加_贷款年限_不能超过" + maxAgePlusLoanTermValue);
     }
 
-    private void check(Gender gender, Integer lenderAge, Integer loanTerm, String message) {
-        String result = LoanCheckStrategyUtil.checkeLenderAndLoanTerm(gender, lenderAge, loanTerm);
-        assertThat(result).isEqualTo("{\"returnCode\": \"-1\",\"" + message + "\":\"\"}");
+    private void check(Gender gender, Integer lenderAge, Integer loanTerm, boolean result,String message) {
+        CheckResultBo bo = LoanCheckStrategyUtil.checkeLenderAndLoanTerm(gender, lenderAge, loanTerm);
+        assertThat(bo.getReturnCode()).isEqualTo(result);
+        assertThat(bo.getReturnMessage()).isEqualTo(message);
     }
 }

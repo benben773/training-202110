@@ -21,7 +21,8 @@ public class LoanPlanService {
         UserLoanPlanMaterial userLoanPlanMaterial = userLoanPlanMaterialDAO.selectUserLoanPlanMaterial(idCard);
         Gender gender = userLoanPlanMaterial.getGender();
         Integer lenderAge = userLoanPlanMaterial.getLenderAge();
-        return LoanCheckStrategyUtil.checkeLenderAndLoanTerm(gender, lenderAge, loanTerm);
+        String result = LoanCheckStrategyUtil.checkeLenderAndLoanTerm(gender, lenderAge, loanTerm).toString();
+        return result;
     }
 
 }
