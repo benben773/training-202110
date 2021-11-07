@@ -15,4 +15,8 @@ public class LoanPlanService {
     public UserLoanPlanMaterial getUserLoadPlanMaterial(String idCard) {
         return userLoanPlanMaterialDAO.selectUserLoanPlanMaterial(idCard);
     }
+
+    public String checkUserLoadPlan(String idCard, String loanTerm) {
+        return "{\"returnCode\": \"0\",\"returnMessage\":\"\"}";
+    }
 }
