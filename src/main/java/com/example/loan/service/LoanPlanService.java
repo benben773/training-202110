@@ -1,5 +1,6 @@
 package com.example.loan.service;
 
+import com.example.loan.bo.Gender;
 import com.example.loan.bo.UserLoanPlanMaterial;
 import com.example.loan.dao.UserLoanPlanMaterialDAO;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,14 @@ public class LoanPlanService {
         return userLoanPlanMaterialDAO.selectUserLoanPlanMaterial(idCard);
     }
 
-    public String checkUserLoadPlan(String idCard, String loanTerm) {
-        return "{\"returnCode\": \"0\",\"returnMessage\":\"\"}";
+    public String checkUserLoadPlan(String idCard, Integer loanTerm) {
+        String result ="";
+        UserLoanPlanMaterial userLoanPlanMaterial = userLoanPlanMaterialDAO.selectUserLoanPlanMaterial(idCard);
+        if(userLoanPlanMaterial.getGender() == Gender.MALE){
+            if (userLoanPlanMaterial.getLenderAge() + loanTerm <= 65) {
+                result = "{\"returnCode\": \"0\",\"returnMessage\":\"\"}";
+            }
+        }
+        return result;
     }
 }

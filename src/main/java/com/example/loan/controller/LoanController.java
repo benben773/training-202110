@@ -18,7 +18,7 @@ public class LoanController {
         return loanPlanService.getUserLoadPlanMaterial(idCard);
     }
     @GetMapping("/check/{idCard}/{loanTerm}")
-    public String checkUserLoadPlan(@PathVariable String idCard,@PathVariable String loanTerm) {
+    public String checkUserLoadPlan(@PathVariable String idCard,@PathVariable Integer loanTerm) {
         return loanPlanService.checkUserLoadPlan(idCard,loanTerm);
     }
 
