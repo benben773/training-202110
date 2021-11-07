@@ -1,6 +1,7 @@
 package com.example.loan.controller;
 
 import com.example.loan.LoanServerApplication;
+import com.example.loan.bo.Gender;
 import com.example.loan.mapper.HouseMaterialMapper;
 import com.example.loan.mapper.TogetherLenderMapper;
 import com.example.loan.mapper.UserLoanPlanMaterialMapper;
@@ -58,9 +59,14 @@ public class LoanControllerTest {
     }
 
     @Test
+    public void 男性_年龄_加_贷款年限_不超过65_贷款成功() {
+
+    }
+
+    @Test
     public void should_get_userLoanPlan_success() throws Exception {
         String idCard = "412233333333";
-        givenLoanPlanMaterialData(idCard);
+        givenLoanPlanMaterialData("王一", MALE, 35, 0, idCard);
         String result = mockMvc.perform(
                         get("/loan-plans/{idCard}", idCard))
                 .andExpect(status().isOk())
@@ -76,20 +82,20 @@ public class LoanControllerTest {
         JSONAssert.assertEquals(expected, result, comparator);
     }
 
-    private void givenLoanPlanMaterialData(String idCard) {
+    private void givenLoanPlanMaterialData(String name, Gender gender, int age, int houseAge, String idCard) {
         UserLoanPlanMaterialEntity entity = new UserLoanPlanMaterialEntity();
-        entity.setGender(MALE);
+        entity.setGender(gender);
         entity.setIncome(BigDecimal.valueOf(10000));
-        entity.setLenderAge(35);
+        entity.setLenderAge(age);
         entity.setIdCard(idCard);
-        entity.setName("王一");
+        entity.setName(name);
         entity.setCreatedAt(LocalDateTime.now());
         entity.setUpdatedAt(LocalDateTime.now());
         userLoanPlanMaterialMapper.insert(entity);
 
         HouseMaterialEntity houseMaterialEntity = new HouseMaterialEntity();
         houseMaterialEntity.setLoanPlanMaterialId(entity.getId());
-        houseMaterialEntity.setAge(0);
+        houseMaterialEntity.setAge(houseAge);
         houseMaterialEntity.setPrice(BigDecimal.valueOf(10000));
         houseMaterialMapper.insert(houseMaterialEntity);
 
