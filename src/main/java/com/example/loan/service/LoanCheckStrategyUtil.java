@@ -12,6 +12,9 @@ public class LoanCheckStrategyUtil {
         } else {
             result = new CheckResultBo(false, gender.getDesc() + "_年龄_加_贷款年限_不能超过" + gender.getMaxAgePlusLoanTermValue());
         }
+        if (loanTerm > 30) {
+            result = new CheckResultBo(false, "住房贷款年限最长为30年");
+        }
         return result;
     }
 

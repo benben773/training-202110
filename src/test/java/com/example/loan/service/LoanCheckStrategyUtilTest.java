@@ -34,8 +34,7 @@ public class LoanCheckStrategyUtilTest {
                 {Gender.MALE,36,30,false,"男性_年龄_加_贷款年限_不能超过65"},
                 {Gender.FEMALE,35,26,false,"女性_年龄_加_贷款年限_不能超过60"},
                 {Gender.FEMALE,25,0,true,""},
-//                李C 女 35 26 0 否 女性_年龄_加_贷款年限_不能超过60
-//                李D 男 30 31 0 否 住房贷款年限最长为30年
+                {Gender.MALE,30,31,false,"住房贷款年限最长为30年"},
 //                李D 男 30 30 10 是
 //                李E 男 30 30 11 否 贷款年限加上房龄总和不能超过40年
         });
