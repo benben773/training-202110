@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @RunWith(JMockit.class)
-public class DemoServiceTest {
+public class DemoEntityServiceTest {
     @Mocked
     ThirdService thirdService;
 

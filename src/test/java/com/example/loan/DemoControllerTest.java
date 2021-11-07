@@ -1,13 +1,16 @@
 package com.example.loan;
 
-import com.example.loan.mapper.Demo;
+import com.alibaba.fastjson.JSON;
 import com.example.loan.mapper.DemoMapper;
+import com.example.loan.mapper.entity.DemoEntity;
+import com.example.loan.service.input.DemoForm;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -20,7 +23,7 @@ import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -28,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest(classes = LoanServerApplication.class)
 @Transactional(rollbackFor = TransactionException.class)
-public class ControllerDemoTest {
+public class DemoControllerTest {
     MockMvc mockMvc;
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -40,12 +43,17 @@ public class ControllerDemoTest {
 
     @Test
     public void demo_test() throws Exception {
-        String result = mockMvc.perform(get("/"))
+        DemoForm demoForm = new DemoForm("demo");
+        String result = mockMvc.perform(
+                        post("/demo")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(JSON.toJSONString(demoForm)))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        assertThat(result).isEqualTo("hello");
+        DemoEntity demoResult = JSON.parseObject(result, DemoEntity.class);
+        assertThat(demoResult.getName()).isEqualTo("demo");
     }
 
     @Autowired
@@ -54,12 +62,12 @@ public class ControllerDemoTest {
     @Test
     public void testSelect() {
         System.out.println(("----- selectAll method test ------"));
-        Demo demo = new Demo();
-        demo.setName("test");
-        demo.setCreatedAt(LocalDateTime.now());
-        demo.setUpdatedAt(LocalDateTime.now());
-        demoMapper.insert(demo);
-        List<Demo> userList = demoMapper.selectList(null);
+        DemoEntity demoEntity = new DemoEntity();
+        demoEntity.setName("test");
+        demoEntity.setCreatedAt(LocalDateTime.now());
+        demoEntity.setUpdatedAt(LocalDateTime.now());
+        demoMapper.insert(demoEntity);
+        List<DemoEntity> userList = demoMapper.selectList(null);
         assertEquals(1, userList.size());
         userList.forEach(System.out::println);
     }

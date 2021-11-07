@@ -16,6 +16,7 @@
 - JMockit
 - h2
 - Assertj
+- flywaydb
 
 ## 测试
 
@@ -46,4 +47,13 @@ docker-compose -f env/local/docker-compose.yml up
 mvn clean install
 mvn spring-boot:run
  ```
+
+#### 数据初始化脚本
+
+地址
+
+```text
+./env/init.sql
+```
+
 
