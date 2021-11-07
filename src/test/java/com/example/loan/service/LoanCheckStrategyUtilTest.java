@@ -15,25 +15,34 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class LoanCheckStrategyUtilTest {
 
     private Gender gender;
-    private Integer maxAgePlusLoanTermValue;
     private Integer lenderAge;
     private Integer loanTerm;
+    private boolean result;
+    private String message;
 
-    public LoanCheckStrategyUtilTest(Gender gender, Integer lenderAge, Integer loanTerm, Integer maxAgePlusLoanTermValue) {
+    public LoanCheckStrategyUtilTest(Gender gender, Integer lenderAge, Integer loanTerm,boolean result,String message) {
         this.gender = gender;
-        this.maxAgePlusLoanTermValue = maxAgePlusLoanTermValue;
         this.lenderAge = lenderAge;
+        this.result = result;
         this.loanTerm = loanTerm;
+        this.message = message;
     }
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {Gender.FEMALE,35,26,60},
+                {Gender.MALE,35,30,true,""},
+                {Gender.MALE,36,30,false,"男性_年龄_加_贷款年限_不能超过65"},
+                {Gender.FEMALE,35,26,false,"女性_年龄_加_贷款年限_不能超过60"},
+//                李B 女 35 25 0 是
+//                李C 女 35 26 0 否 女性_年龄_加_贷款年限_不能超过60
+//                李D 男 30 31 0 否 住房贷款年限最长为30年
+//                李D 男 30 30 10 是
+//                李E 男 30 30 11 否 贷款年限加上房龄总和不能超过40年
         });
     }
     @Test
-    public void 女性_年龄_加_贷款年限_不能超过60() {
-        check(gender, lenderAge, loanTerm, false,gender.getDesc() + "_年龄_加_贷款年限_不能超过" + maxAgePlusLoanTermValue);
+    public void checkParams() {
+        check(gender, lenderAge, loanTerm, result, message);
     }
 
     private void check(Gender gender, Integer lenderAge, Integer loanTerm, boolean result,String message) {

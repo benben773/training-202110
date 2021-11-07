@@ -15,9 +15,8 @@ public class LoanCheckStrategyUtil {
             if (lenderAge + loanTerm <= 60) {
                 result = new CheckResultBo(true, "");
             }else{
-                result = new CheckResultBo(false, "女性_年龄_加_贷款年限_不能超过60");
+                result = new CheckResultBo(false, gender.getDesc() + "_年龄_加_贷款年限_不能超过" + gender.getMaxAgePlusLoanTermValue());
             }
-
         }
         return result;
     }
