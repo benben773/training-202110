@@ -17,14 +17,16 @@ public class LoanCheckStrategyUtilTest {
     private Gender gender;
     private Integer lenderAge;
     private Integer loanTerm;
+    private Integer houseAge;
     private boolean result;
     private String message;
 
-    public LoanCheckStrategyUtilTest(Gender gender, Integer lenderAge, Integer loanTerm,boolean result,String message) {
+    public LoanCheckStrategyUtilTest(Gender gender, Integer lenderAge, Integer loanTerm,Integer houseAge,boolean result,String message) {
         this.gender = gender;
         this.lenderAge = lenderAge;
         this.result = result;
         this.loanTerm = loanTerm;
+        this.houseAge = houseAge;
         this.message = message;
     }
     @Parameterized.Parameters
@@ -41,11 +43,11 @@ public class LoanCheckStrategyUtilTest {
     }
     @Test
     public void checkParams() {
-        check(gender, lenderAge, loanTerm, result, message);
+        check(gender, lenderAge, loanTerm, houseAge,result, message);
     }
 
-    private void check(Gender gender, Integer lenderAge, Integer loanTerm, boolean result,String message) {
-        CheckResultBo bo = LoanCheckStrategyUtil.checkeLenderAndLoanTerm(gender, lenderAge, loanTerm);
+    private void check(Gender gender, Integer lenderAge, Integer loanTerm, Integer houseAge,boolean result,String message) {
+        CheckResultBo bo = LoanCheckStrategyUtil.checkeLenderAndLoanTerm(gender, lenderAge, loanTerm,houseAge);
         assertThat(bo.getReturnCode()).isEqualTo(result);
         assertThat(bo.getReturnMessage()).isEqualTo(message);
     }

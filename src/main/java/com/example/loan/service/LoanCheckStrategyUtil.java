@@ -5,7 +5,7 @@ import com.example.loan.bo.Gender;
 
 public class LoanCheckStrategyUtil {
 
-    public static CheckResultBo checkeLenderAndLoanTerm(Gender gender, Integer lenderAge, Integer loanTerm) {
+    public static CheckResultBo checkeLenderAndLoanTerm(Gender gender, Integer lenderAge, Integer loanTerm ,Integer houseAge) {
         CheckResultBo result = new CheckResultBo();
         if (lenderAge + loanTerm <= gender.getMaxAgePlusLoanTermValue()) {
             result = new CheckResultBo(true, "");
@@ -14,6 +14,9 @@ public class LoanCheckStrategyUtil {
         }
         if (loanTerm > 30) {
             result = new CheckResultBo(false, "住房贷款年限最长为30年");
+        }
+        if (loanTerm+houseAge>40) {
+            result = new CheckResultBo(false, "贷款年限加上房龄总和不能超过40年");
         }
         return result;
     }
