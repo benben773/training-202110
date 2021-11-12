@@ -29,4 +29,7 @@ public class UserLoanPlanMaterial {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    public Integer getHouseMaterialAge() {
+        return this.getHouseMaterial().getAge();
+    }
 }

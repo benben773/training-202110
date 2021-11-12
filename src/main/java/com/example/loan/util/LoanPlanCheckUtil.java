@@ -11,6 +11,7 @@ import com.example.loan.bo.UserLoanPlanMaterial;
 public class LoanPlanCheckUtil {
 
     public static final int MAX_LOAN_TERM = 30;
+    public static final int MAX_LOAN_TERM_PLUS_HOUSE_AGE = 40;
 
     public static LoanPlantChectBo check(Integer loanTerm, UserLoanPlanMaterial loaner) {
         if (loanTerm > MAX_LOAN_TERM) {
@@ -20,8 +21,8 @@ public class LoanPlanCheckUtil {
         if (loaner.getLenderAge() + loanTerm > gender.getMaxAgePlusLoanTerm()) {
             return new LoanPlantChectBo(String.format("%s_年龄_加_贷款年限_不能超过%d", gender.getDesc(), gender.getMaxAgePlusLoanTerm()),false);
         }
-        if (loaner.getHouseMaterial().getAge()+ loanTerm > 40) {
-            return new LoanPlantChectBo(String.format("贷款年限加上房龄总和不能超过%s年", 40),false);
+        if (loaner.getHouseMaterialAge()+ loanTerm > MAX_LOAN_TERM_PLUS_HOUSE_AGE) {
+            return new LoanPlantChectBo(String.format("贷款年限加上房龄总和不能超过%s年", MAX_LOAN_TERM_PLUS_HOUSE_AGE),false);
         }
         return new LoanPlantChectBo("",true);
     }
