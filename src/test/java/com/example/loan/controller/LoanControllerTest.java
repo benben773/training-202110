@@ -1,6 +1,7 @@
 package com.example.loan.controller;
 
 import com.example.loan.LoanServerApplication;
+import com.example.loan.bo.Gender;
 import com.example.loan.mapper.HouseMaterialMapper;
 import com.example.loan.mapper.TogetherLenderMapper;
 import com.example.loan.mapper.UserLoanPlanMaterialMapper;
@@ -61,7 +62,7 @@ public class LoanControllerTest {
     @Test
     public void should_get_userLoanPlan_success() throws Exception {
         String idCard = "412233333333";
-        givenLoanPlanMaterialData(idCard);
+        givenLoanPlanMaterialData(idCard, MALE, 35, 0);
         String result = mockMvc.perform(
                         get("/loan-plans/{idCard}", idCard))
                 .andExpect(status().isOk())
@@ -80,7 +81,7 @@ public class LoanControllerTest {
     public void 男性_年龄_加_贷款年限_不能超过65() throws Exception {
 //        李A 男 35 30 0 是
         String idCard = "1";
-        givenLoanPlanMaterialData(idCard);
+        givenLoanPlanMaterialData(idCard, MALE, 35, 0);
         String result = mockMvc.perform(
                         get("/loan-plans/loan-plans-check/{idCard}/{loanTerm}", idCard,30))
                 .andExpect(status().isOk())
@@ -91,11 +92,11 @@ public class LoanControllerTest {
         assertThat(result).isEqualTo(expected);
     }
 
-    private void givenLoanPlanMaterialData(String idCard) {
+    private void givenLoanPlanMaterialData(String idCard, Gender gender, int age, int houseAge) {
         UserLoanPlanMaterialEntity entity = new UserLoanPlanMaterialEntity();
-        entity.setGender(MALE);
+        entity.setGender(gender);
         entity.setIncome(BigDecimal.valueOf(10000));
-        entity.setLenderAge(35);
+        entity.setLenderAge(age);
         entity.setIdCard(idCard);
         entity.setName("王一");
         entity.setCreatedAt(LocalDateTime.now());
@@ -104,7 +105,7 @@ public class LoanControllerTest {
 
         HouseMaterialEntity houseMaterialEntity = new HouseMaterialEntity();
         houseMaterialEntity.setLoanPlanMaterialId(entity.getId());
-        houseMaterialEntity.setAge(0);
+        houseMaterialEntity.setAge(houseAge);
         houseMaterialEntity.setPrice(BigDecimal.valueOf(10000));
         houseMaterialMapper.insert(houseMaterialEntity);
 
