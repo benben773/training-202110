@@ -1,5 +1,6 @@
 package com.example.loan.controller;
 
+import com.example.loan.bo.LoanPlantChectBo;
 import com.example.loan.bo.UserLoanPlanMaterial;
 import com.example.loan.service.LoanPlanService;
 import com.example.loan.util.LoanPlanCheckUtil;
@@ -21,7 +22,8 @@ public class LoanController {
     @GetMapping("/loan-plans-check/{idCard}/{loanTerm}")
     public String getUserLoadPlanCheck(@PathVariable String idCard,@PathVariable Integer loanTerm) {
         UserLoanPlanMaterial loaner = loanPlanService.getUserLoadPlanMaterial(idCard);
-        return LoanPlanCheckUtil.check(loanTerm, loaner);
+        LoanPlantChectBo check = LoanPlanCheckUtil.check(loanTerm, loaner);
+        return check.toString();
     }
 
 }
