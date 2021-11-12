@@ -3,11 +3,16 @@ package com.example.loan.util;
 import com.example.loan.bo.*;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Arrays;
+import java.util.Collection;
 
+@RunWith(Parameterized.class)
 public class LoanPlanCheckUtilTest {
 
     private Gender gender;
@@ -17,14 +22,23 @@ public class LoanPlanCheckUtilTest {
     private boolean returnCode;
     private String returnMessage;
 
+    public LoanPlanCheckUtilTest(Gender gender, Integer age, Integer loanTerm, Integer houseAge, boolean returnCode, String returnMessage) {
+        this.gender = gender;
+        this.age = age;
+        this.loanTerm = loanTerm;
+        this.houseAge = houseAge;
+        this.returnCode = returnCode;
+        this.returnMessage = returnMessage;
+    }
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {Gender.MALE, 36,30,0,false,"男性_年龄_加_贷款年限_不能超过65"},
+        });
+    }
+
     @Test
     public void 男性_年龄_加_贷款年限_不能超过65() throws Exception {
-        gender = Gender.MALE;
-        age = Integer.valueOf(36);
-        loanTerm = Integer.valueOf(30);
-        houseAge = Integer.valueOf(0);
-        returnCode = false;
-        returnMessage = "男性_年龄_加_贷款年限_不能超过65";
         check(gender, age, loanTerm, houseAge, returnCode, returnMessage);
     }
 

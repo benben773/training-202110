@@ -16,8 +16,8 @@ public class LoanPlantChectBo {
     @Override
     public String toString() {
         return "{" +
-                "\"returnMessage\":" + (returnMessage == null ? "null" : "\"" + returnMessage + "\"") + ", " +
-                "\"returnCode\":\"" + returnCode + "\"" +
+                "\"returnCode\":\"" + returnCode + "\"," +
+                "\"returnMessage\":" + (returnMessage == null ? "null" : "\"" + returnMessage + "\"") + "" +
                 "}";
     }
 
