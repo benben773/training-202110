@@ -20,6 +20,9 @@ public class LoanPlanCheckUtil {
         if (loaner.getLenderAge() + loanTerm > gender.getMaxAgePlusLoanTerm()) {
             return new LoanPlantChectBo(String.format("%s_年龄_加_贷款年限_不能超过%d", gender.getDesc(), gender.getMaxAgePlusLoanTerm()),false);
         }
+        if (loaner.getHouseMaterial().getAge()+ loanTerm > 40) {
+            return new LoanPlantChectBo(String.format("贷款年限加上房龄总和不能超过%s年", 40),false);
+        }
         return new LoanPlantChectBo("",true);
     }
 }
