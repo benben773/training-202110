@@ -79,30 +79,27 @@ public class LoanControllerTest {
     }
     @Test
     public void 男性_年龄_加_贷款年限_不超过65_通过() throws Exception {
-//        李A 男 35 30 0 是
         String idCard = "1";
         givenLoanPlanMaterialData(idCard, MALE, 35, 0);
-        String result = mockMvc.perform(
-                        get("/loan-plans/loan-plans-check/{idCard}/{loanTerm}", idCard,30))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-        String expected = "{\"returnCode\":\"true\",\"returnMessage\":\"\"}";
-        assertThat(result).isEqualTo(expected);
+        Integer loanTerm = 30;
+        check(idCard, loanTerm, "true", "");
     }
+
     @Test
     public void 男性_年龄_加_贷款年限_不能超过65() throws Exception {
-//        李A 男 35 30 0 是
         String idCard = "1";
         givenLoanPlanMaterialData(idCard, MALE, 36, 0);
+        check(idCard, 30, "false", "男性_年龄_加_贷款年限_不能超过65");
+    }
+
+    private void check(String idCard, Integer loanTerm, String returnCode, String returnMessage) throws Exception {
         String result = mockMvc.perform(
-                        get("/loan-plans/loan-plans-check/{idCard}/{loanTerm}", idCard,30))
+                        get("/loan-plans/loan-plans-check/{idCard}/{loanTerm}", idCard, loanTerm))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();
-        String expected = "{\"returnCode\":\"false\",\"returnMessage\":\"男性_年龄_加_贷款年限_不能超过65\"}";
+        String expected = "{\"returnCode\":\"" + returnCode + "\",\"returnMessage\":\""+returnMessage+"\"}";
         assertThat(result).isEqualTo(expected);
     }
 
