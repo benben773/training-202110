@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static com.example.loan.bo.Gender.MALE;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,6 +75,20 @@ public class LoanControllerTest {
                 new Customization("updatedAt", (o1, o2) -> true)
         );
         JSONAssert.assertEquals(expected, result, comparator);
+    }
+    @Test
+    public void 男性_年龄_加_贷款年限_不能超过65() throws Exception {
+//        李A 男 35 30 0 是
+        String idCard = "1";
+        givenLoanPlanMaterialData(idCard);
+        String result = mockMvc.perform(
+                        get("/loan-plans-check/{idCard}/{loanTerm}", idCard,30))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expected = "{\"returnCode\":\"true\",\"returnMessage\":\"\"}";
+        assertThat(result).isEqualTo(expected);
     }
 
     private void givenLoanPlanMaterialData(String idCard) {
