@@ -78,7 +78,7 @@ public class LoanControllerTest {
         JSONAssert.assertEquals(expected, result, comparator);
     }
     @Test
-    public void 男性_年龄_加_贷款年限_不能超过65() throws Exception {
+    public void 男性_年龄_加_贷款年限_不超过65_通过() throws Exception {
 //        李A 男 35 30 0 是
         String idCard = "1";
         givenLoanPlanMaterialData(idCard, MALE, 35, 0);
@@ -89,6 +89,20 @@ public class LoanControllerTest {
                 .getResponse()
                 .getContentAsString();
         String expected = "{\"returnCode\":\"true\",\"returnMessage\":\"\"}";
+        assertThat(result).isEqualTo(expected);
+    }
+    @Test
+    public void 男性_年龄_加_贷款年限_不能超过65() throws Exception {
+//        李A 男 35 30 0 是
+        String idCard = "1";
+        givenLoanPlanMaterialData(idCard, MALE, 36, 0);
+        String result = mockMvc.perform(
+                        get("/loan-plans/loan-plans-check/{idCard}/{loanTerm}", idCard,30))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expected = "{\"returnCode\":\"false\",\"returnMessage\":\"男性_年龄_加_贷款年限_不能超过65\"}";
         assertThat(result).isEqualTo(expected);
     }
 
