@@ -34,9 +34,14 @@ public class LoanPlanCheckUtilTest {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {Gender.MALE, 36,30,0,false,"男性_年龄_加_贷款年限_不能超过65"},
+                {Gender.MALE, 35,30,0,true,""},
+                {Gender.FEMALE, 35,31,0,true,"住房贷款年限最长为30年"},
+//                李D 男 30 31 0 否 住房贷款年限最长为30年
+//                李E 男 30 30 10 是
+//                李F 男 30 30 11 否 贷款年限加上房龄总和不能超过40年
+//                李G 男 30 30 10 是
         });
     }
-
     @Test
     public void 男性_年龄_加_贷款年限_不能超过65() throws Exception {
         check(gender, age, loanTerm, houseAge, returnCode, returnMessage);
