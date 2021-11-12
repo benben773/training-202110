@@ -19,6 +19,10 @@ public class LoanController {
     }
     @GetMapping("/loan-plans-check/{idCard}/{loanTerm}")
     public String getUserLoadPlanCheck(@PathVariable String idCard,@PathVariable Integer loanTerm) {
+        UserLoanPlanMaterial loaner = loanPlanService.getUserLoadPlanMaterial(idCard);
+        if (loaner.getLenderAge() > 35) {
+            return "{\"returnCode\":\"false\",\"returnMessage\":\"男性_年龄_加_贷款年限_不能超过65\"}";
+        }
         return "{\"returnCode\":\"true\",\"returnMessage\":\"\"}";
     }
 
