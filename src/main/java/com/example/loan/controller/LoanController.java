@@ -17,5 +17,9 @@ public class LoanController {
     public UserLoanPlanMaterial getUserLoadPlanMaterial(@PathVariable String idCard) {
         return loanPlanService.getUserLoadPlanMaterial(idCard);
     }
+    @GetMapping("/loan-plans-check/{idCard}/{loanTerm}")
+    public String getUserLoadPlanCheck(@PathVariable String idCard,@PathVariable Integer loanTerm) {
+        return "{\"returnCode\":\"true\",\"returnMessage\":\"\"}";
+    }
 
 }

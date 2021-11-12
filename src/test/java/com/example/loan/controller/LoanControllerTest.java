@@ -82,7 +82,7 @@ public class LoanControllerTest {
         String idCard = "1";
         givenLoanPlanMaterialData(idCard);
         String result = mockMvc.perform(
-                        get("/loan-plans-check/{idCard}/{loanTerm}", idCard,30))
+                        get("/loan-plans/loan-plans-check/{idCard}/{loanTerm}", idCard,30))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
