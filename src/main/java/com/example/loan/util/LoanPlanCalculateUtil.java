@@ -8,9 +8,12 @@ import com.example.loan.bo.UserLoanPlanMaterial;
  * @date ：Created in 2021/11/17 16:16
  */
 public class LoanPlanCalculateUtil {
+
+    public static final int MAX_LOANTERM_PLUS_HOUSE_AGE = 40;
+
     public static LoanPlantBo calculateUserLoanPlan(Integer loanTerm, UserLoanPlanMaterial loaner) {
         int maxLoanYearByMaxAgePlusLoanTerm = loaner.getGender().getMaxAgePlusLoanTerm() - loaner.getLenderAge();
-        int maxLoanYearByLoanTermPlusHouseAge = 40 - loaner.getHouseMaterialAge();
+        int maxLoanYearByLoanTermPlusHouseAge = MAX_LOANTERM_PLUS_HOUSE_AGE - loaner.getHouseMaterialAge();
         return new LoanPlantBo(maxLoanYearByMaxAgePlusLoanTerm<=maxLoanYearByLoanTermPlusHouseAge?maxLoanYearByMaxAgePlusLoanTerm:maxLoanYearByLoanTermPlusHouseAge );
     }
 }
