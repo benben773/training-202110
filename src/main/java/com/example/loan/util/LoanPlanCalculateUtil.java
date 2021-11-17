@@ -8,7 +8,9 @@ import com.example.loan.bo.UserLoanPlanMaterial;
  * @date ：Created in 2021/11/17 16:16
  */
 public class LoanPlanCalculateUtil {
-    public static LoanPlantBo calculateUserLoanPlan(UserLoanPlanMaterial loaner) {
-        return new LoanPlantBo(loaner.getGender().getMaxAgePlusLoanTerm() - loaner.getLenderAge());
+    public static LoanPlantBo calculateUserLoanPlan(Integer loanTerm, UserLoanPlanMaterial loaner) {
+        int maxLoanYearByMaxAgePlusLoanTerm = loaner.getGender().getMaxAgePlusLoanTerm() - loaner.getLenderAge();
+        int maxLoanYearByLoanTermPlusHouseAge = 40 - loaner.getHouseMaterialAge();
+        return new LoanPlantBo(maxLoanYearByMaxAgePlusLoanTerm<=maxLoanYearByLoanTermPlusHouseAge?maxLoanYearByMaxAgePlusLoanTerm:maxLoanYearByLoanTermPlusHouseAge );
     }
 }
