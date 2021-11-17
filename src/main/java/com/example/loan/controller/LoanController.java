@@ -29,7 +29,7 @@ public class LoanController {
     @GetMapping("/loan-calculateUserLoadPlan/{idCard}/{loanTerm}")
     public String calculateUserLoadPlan(@PathVariable String idCard,@PathVariable Integer loanTerm) {
         UserLoanPlanMaterial loaner = loanPlanService.getUserLoadPlanMaterial(idCard);
-        LoanPlantBo check = new LoanPlantBo(25);
+        LoanPlantBo check = new LoanPlantBo(loaner.getGender().getMaxAgePlusLoanTerm() - loaner.getLenderAge());
         return check.toString();
     }
 
