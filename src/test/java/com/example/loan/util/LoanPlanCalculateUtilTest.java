@@ -37,19 +37,24 @@ public class LoanPlanCalculateUtilTest {
         return Arrays.asList(new Object[][]{
                 {Gender.MALE, 35,30,0,true,30,"最大贷款年限计算_男性_年龄_加_贷款年限_不能超过65"},
                 {Gender.MALE, 35,20,20,true,20,"贷款年限加上房龄总和不能超过40年"},
-                {Gender.FEMALE, 35,26,20,true,20,"贷款年限加上房龄总、贷款年限不能超过60取最小"},
-                {Gender.FEMALE, 45,20,20,true,15,"贷款年限加上房龄总、贷款年限不能超过60取最小"},
+                {Gender.FEMALE, 34,25,15,true,25,"贷款年限加上房龄总、贷款年限不能超过60取最小"},
+                {Gender.FEMALE, 34,25,13,true,26,"贷款年限加上房龄总、贷款年限不能超过60取最小"},
+                {Gender.MALE, 30,30,11,false,0,"贷款年限加上房龄总和不能超过40年"},
         });
     }
     @Test
     public void calculate()  {
-        calculate(gender, age, loanTerm, houseAge, returnCode, maxLoanYear);
+        calculate(gender, age, loanTerm, houseAge, returnCode, maxLoanYear,desc);
     }
 
-    private void calculate(Gender gender, Integer age, Integer loanTerm, Integer houseAge, boolean returnCode, Integer maxLoanYear) {
+    private void calculate(Gender gender, Integer age, Integer loanTerm, Integer houseAge, boolean returnCode, Integer maxLoanYear,String desc) {
         UserLoanPlanMaterial loaner = new UserLoanPlanMaterial(Long.valueOf(1), "idCard", "name", gender, new BigDecimal(0), age, new TogetherLender("idCard", "name", new BigDecimal(0)), new HouseMaterial(houseAge, new BigDecimal(0)), LocalDateTime.of(2021, Month.NOVEMBER, 12, 21, 46, 40), LocalDateTime.of(2021, Month.NOVEMBER, 12, 21, 46, 40));
         LoanPlantBo result = LoanPlanCalculateUtil.calculateUserLoanPlan(loanTerm,loaner);
         Assert.assertEquals(result.isReturnCode(), returnCode);
         Assert.assertEquals(result.getMaxLoanYear(), maxLoanYear);
+        if (!result.isReturnCode()) {
+            Assert.assertEquals(result.getReturnMessage(), desc);
+        }
+
     }
 }

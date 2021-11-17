@@ -12,6 +12,7 @@ public class LoanPlantBo {
     public LoanPlantBo() {
         this.returnMessage = "";
         this.returnCode = false;
+        this.maxLoanYear = 0;
     }
     public LoanPlantBo(Integer maxLoanYear) {
         this.returnMessage = "";
