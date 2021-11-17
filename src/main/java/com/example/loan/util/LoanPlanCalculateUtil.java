@@ -21,7 +21,8 @@ public class LoanPlanCalculateUtil {
         }
         int maxLoanYearByMaxAgePlusLoanTerm = loaner.getGender().getMaxAgePlusLoanTerm() - loaner.getLenderAge();
         int maxLoanYearByLoanTermPlusHouseAge = MAX_LOANTERM_PLUS_HOUSE_AGE - loaner.getHouseMaterialAge();
-        return new LoanPlantBo(Math.min(maxLoanYearByMaxAgePlusLoanTerm, maxLoanYearByLoanTermPlusHouseAge));
+        int minCalculate = Math.min(maxLoanYearByMaxAgePlusLoanTerm, maxLoanYearByLoanTermPlusHouseAge);
+        return new LoanPlantBo(Math.min(minCalculate,loanTerm));
     }
 
     private LoanPlanCalculateUtil() {
