@@ -4,6 +4,7 @@ import com.example.loan.bo.LoanPlantBo;
 import com.example.loan.bo.LoanPlantChectBo;
 import com.example.loan.bo.UserLoanPlanMaterial;
 import com.example.loan.service.LoanPlanService;
+import com.example.loan.util.LoanPlanCalculateUtil;
 import com.example.loan.util.LoanPlanCheckUtil;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +30,9 @@ public class LoanController {
     @GetMapping("/loan-calculateUserLoadPlan/{idCard}/{loanTerm}")
     public String calculateUserLoadPlan(@PathVariable String idCard,@PathVariable Integer loanTerm) {
         UserLoanPlanMaterial loaner = loanPlanService.getUserLoadPlanMaterial(idCard);
-        LoanPlantBo check = new LoanPlantBo(loaner.getGender().getMaxAgePlusLoanTerm() - loaner.getLenderAge());
+        LoanPlantBo check = LoanPlanCalculateUtil.calculateUserLoanPlan(loaner);
         return check.toString();
     }
+
 
 }
