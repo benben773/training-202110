@@ -38,6 +38,7 @@ public class LoanPlanCalculateUtilTest {
                 {Gender.MALE, 35,30,0,true,30,"最大贷款年限计算_男性_年龄_加_贷款年限_不能超过65"},
                 {Gender.MALE, 35,20,20,true,20,"贷款年限加上房龄总和不能超过40年"},
                 {Gender.FEMALE, 35,26,20,true,20,"贷款年限加上房龄总、贷款年限不能超过60取最小"},
+                {Gender.FEMALE, 45,20,20,true,15,"贷款年限加上房龄总、贷款年限不能超过60取最小"},
         });
     }
     @Test
