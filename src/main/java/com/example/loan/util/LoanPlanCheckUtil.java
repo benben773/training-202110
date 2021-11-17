@@ -26,4 +26,8 @@ public class LoanPlanCheckUtil {
         }
         return new LoanPlantChectBo("",true);
     }
+
+    private LoanPlanCheckUtil() {
+        throw new IllegalStateException("Utility class");
+    }
 }

@@ -21,7 +21,7 @@ public class DemoService {
 
     public DemoEntity add(DemoForm demoForm) {
         DemoEntity demoEntity = new DemoEntity();
-        demoEntity.setName("demo");
+        demoEntity.setName(demoForm.getName());
         demoEntity.setCreatedAt(LocalDateTime.now());
         demoEntity.setUpdatedAt(LocalDateTime.now());
         demoEntity.setId(1L);

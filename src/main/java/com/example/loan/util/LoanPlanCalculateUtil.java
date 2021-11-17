@@ -9,11 +9,16 @@ import com.example.loan.bo.UserLoanPlanMaterial;
  */
 public class LoanPlanCalculateUtil {
 
-    public static final int MAX_LOANTERM_PLUS_HOUSE_AGE = 40;
+    private static final int MAX_LOANTERM_PLUS_HOUSE_AGE = 40;
 
     public static LoanPlantBo calculateUserLoanPlan(Integer loanTerm, UserLoanPlanMaterial loaner) {
         int maxLoanYearByMaxAgePlusLoanTerm = loaner.getGender().getMaxAgePlusLoanTerm() - loaner.getLenderAge();
         int maxLoanYearByLoanTermPlusHouseAge = MAX_LOANTERM_PLUS_HOUSE_AGE - loaner.getHouseMaterialAge();
         return new LoanPlantBo(maxLoanYearByMaxAgePlusLoanTerm<=maxLoanYearByLoanTermPlusHouseAge?maxLoanYearByMaxAgePlusLoanTerm:maxLoanYearByLoanTermPlusHouseAge );
     }
+
+    private LoanPlanCalculateUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
 }
