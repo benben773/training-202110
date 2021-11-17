@@ -91,7 +91,23 @@ public class LoanControllerTest {
         givenLoanPlanMaterialData(idCard, MALE, 36, 0);
         check(idCard, 30, "false", "男性_年龄_加_贷款年限_不能超过65");
     }
-
+    @Test
+    public void 男性_最大贷款年限计算_年龄_加_贷款年限_不能超过65() throws Exception {
+        String idCard = "1";
+        givenLoanPlanMaterialData(idCard, MALE, 35, 0);
+        checkLoanYear(idCard, 30, "true", "",25);
+    }
+    private void checkLoanYear(String idCard, Integer loanTerm, String returnCode, String returnMessage, Integer maxLoanYear) throws Exception {
+        String result = mockMvc.perform(
+                get("/loan-plans/loan-calculateUserLoadPlan/{idCard}/{loanTerm}", idCard, loanTerm))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+        String expected = "{\"returnCode\":\"" + returnCode + "\",\"returnMessage\":\""+returnMessage +
+                "\",\"maxLoanYear\":\""+maxLoanYear+"\"}";
+        assertThat(result).isEqualTo(expected);
+    }
     private void check(String idCard, Integer loanTerm, String returnCode, String returnMessage) throws Exception {
         String result = mockMvc.perform(
                         get("/loan-plans/loan-plans-check/{idCard}/{loanTerm}", idCard, loanTerm))

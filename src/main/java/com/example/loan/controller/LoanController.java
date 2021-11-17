@@ -1,5 +1,6 @@
 package com.example.loan.controller;
 
+import com.example.loan.bo.LoanPlantBo;
 import com.example.loan.bo.LoanPlantChectBo;
 import com.example.loan.bo.UserLoanPlanMaterial;
 import com.example.loan.service.LoanPlanService;
@@ -23,6 +24,12 @@ public class LoanController {
     public String getUserLoadPlanCheck(@PathVariable String idCard,@PathVariable Integer loanTerm) {
         UserLoanPlanMaterial loaner = loanPlanService.getUserLoadPlanMaterial(idCard);
         LoanPlantChectBo check = LoanPlanCheckUtil.check(loanTerm, loaner);
+        return check.toString();
+    }
+    @GetMapping("/loan-calculateUserLoadPlan/{idCard}/{loanTerm}")
+    public String calculateUserLoadPlan(@PathVariable String idCard,@PathVariable Integer loanTerm) {
+        UserLoanPlanMaterial loaner = loanPlanService.getUserLoadPlanMaterial(idCard);
+        LoanPlantBo check = new LoanPlantBo(25);
         return check.toString();
     }
 
